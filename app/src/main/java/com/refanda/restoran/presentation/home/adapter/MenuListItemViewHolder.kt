@@ -10,7 +10,7 @@ import com.refanda.restoran.utils.toIndonesianFormat
 
 class MenuListItemViewHolder(
     private val binding: ItemMenuListBinding,
-    private val listener: OnItemClickedListener<Menu>
+    private val itemClick: (Menu) -> Unit
 ) : ViewHolder(binding.root), ViewHolderBinder<Menu> {
     override fun bind(item: Menu) {
         item.let {
@@ -20,7 +20,7 @@ class MenuListItemViewHolder(
                 crossfade(true)
             }
             itemView.setOnClickListener {
-                listener.onItemClicked(item)
+                itemClick(item)
             }
         }
     }

@@ -13,8 +13,8 @@ import com.refanda.restoran.databinding.ItemMenuGridBinding
 import com.refanda.restoran.databinding.ItemMenuListBinding
 
 class ListMenuAdapter(
-    private val listener: OnItemClickedListener<Menu>,
-    private val listMode: Int = MODE_LIST
+    private var listMode: Int,
+    private val itemClick: (Menu) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -49,14 +49,14 @@ class ListMenuAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), listener
+            ), itemClick
         ) else {
             MenuListItemViewHolder(
                 ItemMenuListBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ), listener
+                ), itemClick
             )
         }
     }
@@ -70,6 +70,9 @@ class ListMenuAdapter(
         (holder as ViewHolderBinder<Menu>).bind(asyncDataDiffer.currentList[position])
     }
 
+    fun updateListMode(newListMode: Int) {
+        listMode = newListMode
+    }
 }
 
 interface OnItemClickedListener<T> {
