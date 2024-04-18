@@ -1,7 +1,7 @@
 package com.refanda.restoran.data.datasource.menu
 
-import com.refanda.restoran.data.model.Menu
+import com.refanda.restoran.data.source.network.model.menu.MenuResponse
 
 interface MenuDataSource{
-    fun getMenuList() : List<Menu>
+    suspend fun getMenu(categorySlug: String? = null): MenuResponse
 }

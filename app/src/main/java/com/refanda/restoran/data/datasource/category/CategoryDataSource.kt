@@ -1,8 +1,7 @@
 package com.refanda.restoran.data.datasource.category
 
-import com.refanda.restoran.R
-import com.refanda.restoran.data.model.Category
+import com.refanda.restoran.data.source.network.model.category.CategoriesResponse
 
-interface CategoryDataSource{
-    fun getCategoryList() : List<Category>
+interface CategoryDataSource {
+    suspend fun getCategories(): CategoriesResponse
 }

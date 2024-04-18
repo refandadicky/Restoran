@@ -10,7 +10,7 @@ data class Menu (
     var imgUrl: String,
     var price: Double,
     var name: String,
-    var detailMenu: String,
+    var desc: String,
     var address: String,
     var mapsUrl: String
 ) : Parcelable
