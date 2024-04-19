@@ -2,11 +2,15 @@ package com.refanda.restoran.data.source.network.services
 
 import com.refanda.restoran.BuildConfig
 import com.refanda.restoran.data.source.network.model.category.CategoriesResponse
+import com.refanda.restoran.data.source.network.model.checkout.CheckoutRequestPayload
+import com.refanda.restoran.data.source.network.model.checkout.CheckoutResponse
 import com.refanda.restoran.data.source.network.model.menu.MenuResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -17,6 +21,9 @@ interface RestoranApiService  {
 
     @GET("listmenu")
     suspend fun getMenu(@Query("c") category: String? = null): MenuResponse
+
+    @POST("order")
+    suspend fun createOrder(@Body payload : CheckoutRequestPayload): CheckoutResponse
 
     companion object {
         @JvmStatic
