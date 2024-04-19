@@ -84,4 +84,28 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lock"
+            android:enabled="false"
+            android:hint="@string/hint_password"
+            android:text="@string/text_edit_text_password"
+            android:inputType="textPassword"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
