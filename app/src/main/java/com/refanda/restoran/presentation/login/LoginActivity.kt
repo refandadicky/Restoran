@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setClickListener()
+        setupForm()
     }
 
     private fun setClickListener() {
@@ -79,6 +80,13 @@ class LoginActivity : AppCompatActivity() {
                     ).show()
                 }
             )
+        }
+    }
+
+    private fun setupForm() {
+        with(binding.layoutForm) {
+            tilPassword.isVisible = true
+            tilEmail.isVisible = true
         }
     }
 
