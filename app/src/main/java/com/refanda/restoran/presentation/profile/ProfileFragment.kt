@@ -1,5 +1,6 @@
 package com.refanda.restoran.presentation.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,11 +10,24 @@ import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.refanda.restoran.R
+import com.refanda.restoran.data.datasource.firebaseauth.AuthDataSource
+import com.refanda.restoran.data.datasource.firebaseauth.FirebaseAuthDataSource
+import com.refanda.restoran.data.repository.UserRepository
+import com.refanda.restoran.data.repository.UserRepositoryImpl
+import com.refanda.restoran.data.source.network.services.firebase.FirebaseService
+import com.refanda.restoran.data.source.network.services.firebase.FirebaseServiceImpl
 import com.refanda.restoran.databinding.FragmentProfileBinding
+import com.refanda.restoran.presentation.login.LoginActivity
+import com.refanda.restoran.utils.GenericViewModelFactory
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel: ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels{
+        val service: FirebaseService = FirebaseServiceImpl()
+        val dataSource: AuthDataSource = FirebaseAuthDataSource(service)
+        val repository: UserRepository = UserRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(ProfileViewModel(repository))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,9 +40,16 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeLoginStatus()
         setClickListener()
         observeEditMode()
         observeProfileData()
+    }
+
+    private fun observeLoginStatus() {
+        if (!viewModel.isLoggedIn()) {
+            navigateToLogin()
+        }
     }
 
     private fun observeProfileData() {
@@ -56,5 +77,11 @@ class ProfileFragment : Fragment() {
             binding.nameEditText.isEnabled = it
             binding.usernameEditText.isEnabled = it
         }
+    }
+
+    private fun navigateToLogin() {
+        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
     }
 }

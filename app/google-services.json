@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "929391493693",
+    "project_id": "restoran-ca953",
+    "storage_bucket": "restoran-ca953.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929391493693:android:a32aba4071181d749da054",
+        "android_client_info": {
+          "package_name": "com.catnip.firebaseauthexample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK8JTXf2BVZ880gC7t31fVoPQZxO5_ywo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929391493693:android:2978b46dec6c41f59da054",
+        "android_client_info": {
+          "package_name": "com.refanda.restoran"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK8JTXf2BVZ880gC7t31fVoPQZxO5_ywo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
