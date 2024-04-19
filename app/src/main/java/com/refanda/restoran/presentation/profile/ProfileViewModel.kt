@@ -9,13 +9,15 @@ class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
     val profileData = MutableLiveData<Profile>()
     init {
         profileData.value = Profile(
-            name = "Refanda Dicky Pradana",
-            username = "refandadp",
-            email = "refandadicky1@gmail.com",
-            password = "12345678",
+            name = "",
+            username = "",
+            email = "",
+            password = "",
             profileImg = "https://github.com/refandadicky/kokomputer-assets/blob/main/img_profile/img_profile.jpg?raw=true"
         )
     }
+
+    fun getCurrentUser() = repository.getCurrentUser()
 
     val isEditMode = MutableLiveData<Boolean>()
 
