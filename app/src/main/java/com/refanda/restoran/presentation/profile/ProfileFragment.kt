@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.refanda.restoran.R
@@ -53,21 +54,28 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeProfileData() {
+        viewModel.getCurrentUser()?.let { user ->
+            binding.nameEditText.setText(user.fullName)
+            binding.emailEditText.setText(user.email)
+        }
         viewModel.profileData.observe(viewLifecycleOwner) {
             binding.ivProfile.load(it.profileImg) {
                 crossfade(true)
                 error(R.drawable.ic_tab_profile)
                 transformations(CircleCropTransformation())
             }
-            binding.nameEditText.setText(it.name)
-            binding.usernameEditText.setText(it.username)
-            binding.emailEditText.setText(it.email)
         }
     }
 
     private fun setClickListener() {
         binding.layoutHeaderProfile.icEditProfile.setOnClickListener {
             viewModel.changeEditMode()
+        }
+        binding.layoutHeaderProfile.btnLogout.setOnClickListener {
+            viewModel.doLogout()
+            navigateToLogin()
+            val navController = findNavController()
+            navController.navigate(R.id.menu_tab_home)
         }
     }
 

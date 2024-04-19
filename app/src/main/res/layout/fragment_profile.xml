@@ -98,7 +98,6 @@
             android:id="@+id/password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_lock"
             android:enabled="false"
             android:hint="@string/hint_password"
             android:text="@string/text_edit_text_password"
