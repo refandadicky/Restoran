@@ -69,4 +69,8 @@
     <string name="text_et_password">password</string>
     <string name="text_edit_text_password">12345678</string>
     <string name="checkout_error">Checkout Error</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="update_username_failed">Update Username Failed : %1$s</string>
+    <string name="success_to_change">Success to Change</string>
 </resources>
