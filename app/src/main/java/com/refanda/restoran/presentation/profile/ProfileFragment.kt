@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -19,7 +21,9 @@ import com.refanda.restoran.data.source.network.services.firebase.FirebaseServic
 import com.refanda.restoran.data.source.network.services.firebase.FirebaseServiceImpl
 import com.refanda.restoran.databinding.FragmentProfileBinding
 import com.refanda.restoran.presentation.login.LoginActivity
+import com.refanda.restoran.presentation.main.MainActivity
 import com.refanda.restoran.utils.GenericViewModelFactory
+import com.refanda.restoran.utils.proceedWhen
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -68,7 +72,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setClickListener() {
-        binding.layoutHeaderProfile.icEditProfile.setOnClickListener {
+        binding.btnEdit.setOnClickListener {
             viewModel.changeEditMode()
         }
         binding.layoutHeaderProfile.btnLogout.setOnClickListener {
@@ -77,13 +81,49 @@ class ProfileFragment : Fragment() {
             val navController = findNavController()
             navController.navigate(R.id.menu_tab_home)
         }
+        binding.btnSave.setOnClickListener {
+            val username = binding.nameEditText.text.toString()
+            updateProfile(username)
+        }
+    }
+
+    private fun updateProfile(username: String) {
+        viewModel.updateUsername(username).observe(viewLifecycleOwner){
+            it.proceedWhen(
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.success_to_change),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                },
+                doOnError = {
+                    binding.pbLoading.isVisible = false
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.update_username_failed, it.exception?.message.orEmpty()),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.btnSave.isVisible = true
+                    binding.btnEdit.isVisible = false
+                },
+                doOnLoading = {
+                    binding.pbLoading.isVisible  = true
+                    binding.btnSave.isVisible = false
+                    binding.btnEdit.isVisible = false
+                }
+            )
+        }
     }
 
     private fun observeEditMode() {
         viewModel.isEditMode.observe(viewLifecycleOwner) {
-            binding.emailEditText.isEnabled = it
+            binding.emailEditText.isVisible = false
             binding.nameEditText.isEnabled = it
-            binding.usernameEditText.isEnabled = it
+            binding.usernameEditText.isVisible = false
+            binding.passwordEditText.isVisible = false
         }
     }
 
