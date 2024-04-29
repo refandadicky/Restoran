@@ -33,6 +33,7 @@ import com.refanda.restoran.presentation.main.MainActivity
 import com.refanda.restoran.utils.GenericViewModelFactory
 import com.refanda.restoran.utils.proceedWhen
 import com.refanda.restoran.utils.toIndonesianFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -40,18 +41,7 @@ class CheckoutActivity : AppCompatActivity() {
         ActivityCheckoutBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: CheckoutViewModel by viewModels {
-        val ras = RestoranApiService.invoke()
-        val mds: MenuDataSource = MenuApiDataSource(ras)
-        val mr = MenuRepositoryImpl(mds)
-        val fs: FirebaseService = FirebaseServiceImpl()
-        val fds: AuthDataSource = FirebaseAuthDataSource(fs)
-        val fr: UserRepository = UserRepositoryImpl(fds)
-        val db = AppDatabase.getInstance(this)
-        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp: CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(CheckoutViewModel(rp, fr, mr))
-    }
+    private val viewModel: CheckoutViewModel by viewModel()
 
     private val adapter: CartListAdapter by lazy {
         CartListAdapter()

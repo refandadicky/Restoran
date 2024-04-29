@@ -5,20 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.refanda.restoran.R
-import com.refanda.restoran.data.datasource.cart.CartDataSource
-import com.refanda.restoran.data.datasource.cart.CartDatabaseDataSource
 import com.refanda.restoran.data.model.Menu
-import com.refanda.restoran.data.repository.CartRepository
-import com.refanda.restoran.data.repository.CartRepositoryImpl
-import com.refanda.restoran.data.source.local.database.AppDatabase
 import com.refanda.restoran.databinding.ActivityMenuDetailBinding
-import com.refanda.restoran.utils.GenericViewModelFactory
 import com.refanda.restoran.utils.proceedWhen
 import com.refanda.restoran.utils.toIndonesianFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MenuDetailActivity : AppCompatActivity() {
 
@@ -34,13 +29,8 @@ class MenuDetailActivity : AppCompatActivity() {
     private val binding: ActivityMenuDetailBinding by lazy {
         ActivityMenuDetailBinding.inflate(layoutInflater)
     }
-    private val viewModel: MenuDetailViewModel by viewModels {
-        val db = AppDatabase.getInstance(this)
-        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp: CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(
-            MenuDetailViewModel(intent?.extras, rp)
-        )
+    private val viewModel: MenuDetailViewModel by viewModel {
+        parametersOf(intent?.extras)
     }
     private var total: Double = 0.0
 
