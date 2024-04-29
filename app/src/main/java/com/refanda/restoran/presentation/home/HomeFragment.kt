@@ -1,45 +1,25 @@
 package com.refanda.restoran.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.refanda.restoran.R
-import com.refanda.restoran.data.datasource.category.CategoryApiDataSource
-import com.refanda.restoran.data.datasource.category.CategoryDataSource
-import com.refanda.restoran.data.datasource.menu.MenuApiDataSource
-import com.refanda.restoran.data.datasource.menu.MenuDataSource
 import com.refanda.restoran.data.model.Category
 import com.refanda.restoran.data.model.Menu
-import com.refanda.restoran.data.repository.CategoryRepository
-import com.refanda.restoran.data.repository.CategoryRepositoryImpl
-import com.refanda.restoran.data.repository.MenuRepository
-import com.refanda.restoran.data.repository.MenuRepositoryImpl
-import com.refanda.restoran.data.source.local.pref.UserPreferenceImpl
-import com.refanda.restoran.data.source.network.services.RestoranApiService
 import com.refanda.restoran.databinding.FragmentHomeBinding
 import com.refanda.restoran.presentation.home.adapter.CategoryAdapter
 import com.refanda.restoran.presentation.home.adapter.ListMenuAdapter
-import com.refanda.restoran.presentation.home.adapter.OnItemClickedListener
 import com.refanda.restoran.presentation.menudetail.MenuDetailActivity
-import com.refanda.restoran.utils.GenericViewModelFactory
 import com.refanda.restoran.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels {
-        val service = RestoranApiService.invoke()
-        val menuDataSource : MenuDataSource = MenuApiDataSource(service)
-        val menuRepository : MenuRepository = MenuRepositoryImpl(menuDataSource)
-        val categoryDataSource : CategoryDataSource = CategoryApiDataSource(service)
-        val categoryRepository : CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
-        val userPreference = UserPreferenceImpl(requireContext())
-        GenericViewModelFactory.create(HomeViewModel(categoryRepository, menuRepository, userPreference))
-    }
+    private val viewModel: HomeViewModel by viewModel()
 
     private val menuAdapter: ListMenuAdapter by lazy {
         ListMenuAdapter(viewModel.getListMode()){

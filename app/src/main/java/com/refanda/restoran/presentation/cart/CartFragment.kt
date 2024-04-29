@@ -2,37 +2,26 @@ package com.refanda.restoran.presentation.cart
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import com.refanda.restoran.R
-import com.refanda.restoran.data.datasource.cart.CartDataSource
-import com.refanda.restoran.data.datasource.cart.CartDatabaseDataSource
 import com.refanda.restoran.data.model.Cart
-import com.refanda.restoran.data.repository.CartRepository
-import com.refanda.restoran.data.repository.CartRepositoryImpl
-import com.refanda.restoran.data.source.local.database.AppDatabase
 import com.refanda.restoran.databinding.FragmentCartBinding
+import com.refanda.restoran.presentation.checkout.CheckoutActivity
 import com.refanda.restoran.presentation.common.adapter.CartListAdapter
 import com.refanda.restoran.presentation.common.adapter.CartListener
-import com.refanda.restoran.presentation.checkout.CheckoutActivity
-import com.refanda.restoran.utils.GenericViewModelFactory
 import com.refanda.restoran.utils.hideKeyboard
 import com.refanda.restoran.utils.proceedWhen
 import com.refanda.restoran.utils.toIndonesianFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
 
-    private val viewModel : CartViewModel by viewModels {
-        val db = AppDatabase.getInstance(requireContext())
-        val ds : CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp : CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(CartViewModel(rp))
-    }
+    private val viewModel : CartViewModel by viewModel()
 
     private val adapter : CartListAdapter by lazy {
         CartListAdapter(object : CartListener {

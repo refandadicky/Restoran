@@ -2,37 +2,25 @@ package com.refanda.restoran.presentation.profile
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.refanda.restoran.R
-import com.refanda.restoran.data.datasource.firebaseauth.AuthDataSource
-import com.refanda.restoran.data.datasource.firebaseauth.FirebaseAuthDataSource
-import com.refanda.restoran.data.repository.UserRepository
-import com.refanda.restoran.data.repository.UserRepositoryImpl
-import com.refanda.restoran.data.source.network.services.firebase.FirebaseService
-import com.refanda.restoran.data.source.network.services.firebase.FirebaseServiceImpl
 import com.refanda.restoran.databinding.FragmentProfileBinding
 import com.refanda.restoran.presentation.login.LoginActivity
 import com.refanda.restoran.presentation.main.MainActivity
-import com.refanda.restoran.utils.GenericViewModelFactory
 import com.refanda.restoran.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel: ProfileViewModel by viewModels{
-        val service: FirebaseService = FirebaseServiceImpl()
-        val dataSource: AuthDataSource = FirebaseAuthDataSource(service)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(ProfileViewModel(repository))
-    }
+    private val viewModel: ProfileViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
