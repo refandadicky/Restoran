@@ -6,9 +6,9 @@ import com.refanda.restoran.base.ViewHolderBinder
 import com.refanda.restoran.data.model.Category
 import com.refanda.restoran.databinding.ItemCategoryMenuBinding
 
-class CategoryViewHolder (
+class CategoryViewHolder(
     private val binding: ItemCategoryMenuBinding,
-    private val itemClick: (Category) -> Unit
+    private val itemClick: (Category) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
     override fun bind(item: Category) {
         item.let {
@@ -16,7 +16,7 @@ class CategoryViewHolder (
                 crossfade(true)
             }
             binding.tvCategoryName.text = it.name
-            itemView.setOnClickListener{itemClick(item)}
+            itemView.setOnClickListener { itemClick(item) }
         }
     }
 }

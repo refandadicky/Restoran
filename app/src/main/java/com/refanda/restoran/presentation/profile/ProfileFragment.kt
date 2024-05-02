@@ -23,15 +23,19 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         observeLoginStatus()
         setClickListener()
@@ -76,14 +80,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateProfile(username: String) {
-        viewModel.updateUsername(username).observe(viewLifecycleOwner){
+        viewModel.updateUsername(username).observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.success_to_change),
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                 },
@@ -92,16 +96,16 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.update_username_failed, it.exception?.message.orEmpty()),
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                     binding.btnSave.isVisible = true
                     binding.btnEdit.isVisible = false
                 },
                 doOnLoading = {
-                    binding.pbLoading.isVisible  = true
+                    binding.pbLoading.isVisible = true
                     binding.btnSave.isVisible = false
                     binding.btnEdit.isVisible = false
-                }
+                },
             )
         }
     }
@@ -116,8 +120,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun navigateToLogin() {
-        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
 }

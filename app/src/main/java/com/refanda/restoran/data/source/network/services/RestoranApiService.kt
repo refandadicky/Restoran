@@ -14,29 +14,34 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
-interface RestoranApiService  {
-
+interface RestoranApiService {
     @GET("category")
     suspend fun getCategories(): CategoriesResponse
 
     @GET("listmenu")
-    suspend fun getMenu(@Query("c") category: String? = null): MenuResponse
+    suspend fun getMenu(
+        @Query("c") category: String? = null,
+    ): MenuResponse
 
     @POST("order")
-    suspend fun createOrder(@Body payload : CheckoutRequestPayload): CheckoutResponse
+    suspend fun createOrder(
+        @Body payload: CheckoutRequestPayload,
+    ): CheckoutResponse
 
     companion object {
         @JvmStatic
         operator fun invoke(): RestoranApiService {
-            val okHttpClient = OkHttpClient.Builder()
-                .connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS)
-                .build()
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build()
+            val okHttpClient =
+                OkHttpClient.Builder()
+                    .connectTimeout(120, TimeUnit.SECONDS)
+                    .readTimeout(120, TimeUnit.SECONDS)
+                    .build()
+            val retrofit =
+                Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okHttpClient)
+                    .build()
             return retrofit.create(RestoranApiService::class.java)
         }
     }

@@ -11,18 +11,19 @@ import com.refanda.restoran.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface MenuRepository {
-    fun getMenu(categorySlug : String? = null): Flow<ResultWrapper<List<Menu>>>
+    fun getMenu(categorySlug: String? = null): Flow<ResultWrapper<List<Menu>>>
+
     fun createOrder(
         profile: String,
         menus: List<Cart>,
-        totalPrice: Int
+        totalPrice: Int,
     ): Flow<ResultWrapper<Boolean>>
 }
 
 class MenuRepositoryImpl(
-    private val dataSource: MenuDataSource
-):MenuRepository{
-    override fun getMenu(categorySlug : String?): Flow<ResultWrapper<List<Menu>>> {
+    private val dataSource: MenuDataSource,
+) : MenuRepository {
+    override fun getMenu(categorySlug: String?): Flow<ResultWrapper<List<Menu>>> {
         return proceedFlow {
             dataSource.getMenu(categorySlug).data.toMenu()
         }
@@ -31,21 +32,24 @@ class MenuRepositoryImpl(
     override fun createOrder(
         profile: String,
         menus: List<Cart>,
-        totalPrice: Int
+        totalPrice: Int,
     ): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
-            dataSource.createOrder(CheckoutRequestPayload(
-                total = totalPrice,
-                username = profile,
-                orders = menus.map {
-                    CheckoutItemPayload(
-                        nama = it.menuName,
-                        qty = it.itemQuantity,
-                        catatan = it.itemNotes.orEmpty(),
-                        harga = it.menuPrice.toInt()
-                    )
-                }
-            )).status ?: false
+            dataSource.createOrder(
+                CheckoutRequestPayload(
+                    total = totalPrice,
+                    username = profile,
+                    orders =
+                        menus.map {
+                            CheckoutItemPayload(
+                                nama = it.menuName,
+                                qty = it.itemQuantity,
+                                catatan = it.itemNotes.orEmpty(),
+                                harga = it.menuPrice.toInt(),
+                            )
+                        },
+                ),
+            ).status ?: false
         }
     }
 }

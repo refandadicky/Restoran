@@ -1,6 +1,5 @@
 package com.refanda.restoran.data.model
 
-
 data class Cart(
     var id: Int? = null,
     var menuId: String? = null,
@@ -8,5 +7,5 @@ data class Cart(
     var menuImgUrl: String,
     var menuPrice: Double,
     var itemQuantity: Int = 0,
-    var itemNotes: String? = null
+    var itemNotes: String? = null,
 )
