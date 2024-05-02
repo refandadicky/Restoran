@@ -12,8 +12,8 @@ interface CategoryRepository {
 }
 
 class CategoryRepositoryImpl(
-    private val dataSource: CategoryDataSource
-):CategoryRepository{
+    private val dataSource: CategoryDataSource,
+) : CategoryRepository {
     override fun getCategory(): Flow<ResultWrapper<List<Category>>> {
         return proceedFlow { dataSource.getCategories().data.toCategories() }
     }

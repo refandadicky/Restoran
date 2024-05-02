@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 class HomeViewModel(
     private val categoryRepository: CategoryRepository,
     private val menuRepository: MenuRepository,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
 ) : ViewModel() {
     private val _isUsingGridMode = MutableLiveData(userPreference.isUsingGridMode())
     val isUsingGridMode: LiveData<Boolean>
@@ -28,7 +28,7 @@ class HomeViewModel(
         userPreference.setUsingGridMode(!currentValue)
     }
 
-    fun getMenu(categorySlug: String? = null) =
-        menuRepository.getMenu(categorySlug).asLiveData(Dispatchers.IO)
+    fun getMenu(categorySlug: String? = null) = menuRepository.getMenu(categorySlug).asLiveData(Dispatchers.IO)
+
     fun getCategories() = categoryRepository.getCategory().asLiveData(Dispatchers.IO)
 }

@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             inputLogin()
         }
-        binding.tvNavToRegister.highLightWord("Register Here"){
+        binding.tvNavToRegister.highLightWord("Register Here") {
             navigateRegister()
         }
     }
@@ -41,8 +41,11 @@ class LoginActivity : AppCompatActivity() {
         doLogin(email, password)
     }
 
-    private fun doLogin(email: String, password: String) {
-        viewModel.doLogin(email, password).observe(this){result ->
+    private fun doLogin(
+        email: String,
+        password: String,
+    ) {
+        viewModel.doLogin(email, password).observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
@@ -50,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         "Login Success",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                     navigateToMain()
                 },
@@ -64,9 +67,9 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         "Login Failed",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
-                }
+                },
             )
         }
     }
@@ -79,14 +82,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
 
     private fun navigateRegister() {
-        startActivity(Intent(this, RegisterActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        })
+        startActivity(
+            Intent(this, RegisterActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 }

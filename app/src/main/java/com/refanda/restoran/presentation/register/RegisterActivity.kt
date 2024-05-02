@@ -47,30 +47,34 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun proceedRegister(fullName: String, password: String, email: String) {
-            viewModel.doRegister(fullName, password, email).observe(this) {
-                it.proceedWhen(
-                    doOnSuccess = {
-                        binding.pbLoading.isVisible = false
-                        binding.btnRegister.isVisible = true
-                        navigateToMain()
-                    },
-                    doOnError = {
-                        binding.pbLoading.isVisible = false
-                        binding.btnRegister.isVisible = true
-                        Toast.makeText(
-                            this,
-                            "Login Failed : ${it.exception?.message.orEmpty()}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                    doOnLoading = {
-                        binding.pbLoading.isVisible = true
-                        binding.btnRegister.isVisible = false
-                    }
-                )
-            }
+    private fun proceedRegister(
+        fullName: String,
+        password: String,
+        email: String,
+    ) {
+        viewModel.doRegister(fullName, password, email).observe(this) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnRegister.isVisible = true
+                    navigateToMain()
+                },
+                doOnError = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnRegister.isVisible = true
+                    Toast.makeText(
+                        this,
+                        "Login Failed : ${it.exception?.message.orEmpty()}",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.btnRegister.isVisible = false
+                },
+            )
         }
+    }
 
     private fun isFormValid(): Boolean {
         val fullName = binding.layoutForm.etName.text.toString().trim()
@@ -79,11 +83,12 @@ class RegisterActivity : AppCompatActivity() {
         val email = binding.layoutForm.etEmail.text.toString().trim()
 
         return checkNameValidation(fullName) &&
-                checkEmailValidation(email) &&
-                checkPasswordValidation(password, binding.layoutForm.tilPassword) &&
-                checkPasswordValidation(confirmPassword, binding.layoutForm.tilConfirmPassword) &&
-                checkPwdAndConfirmPwd(password, confirmPassword)
+            checkEmailValidation(email) &&
+            checkPasswordValidation(password, binding.layoutForm.tilPassword) &&
+            checkPasswordValidation(confirmPassword, binding.layoutForm.tilConfirmPassword) &&
+            checkPwdAndConfirmPwd(password, confirmPassword)
     }
+
     private fun checkNameValidation(fullName: String): Boolean {
         return if (fullName.isEmpty()) {
             binding.layoutForm.tilName.isErrorEnabled = true
@@ -94,6 +99,7 @@ class RegisterActivity : AppCompatActivity() {
             true
         }
     }
+
     private fun checkEmailValidation(email: String): Boolean {
         return if (email.isEmpty()) {
             binding.layoutForm.tilEmail.isErrorEnabled = true
@@ -111,7 +117,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun checkPasswordValidation(
         confirmPassword: String,
-        textInputLayout: TextInputLayout
+        textInputLayout: TextInputLayout,
     ): Boolean {
         return if (confirmPassword.isEmpty()) {
             textInputLayout.isErrorEnabled = true
@@ -129,7 +135,10 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPwdAndConfirmPwd(password: String, confirmPassword: String): Boolean {
+    private fun checkPwdAndConfirmPwd(
+        password: String,
+        confirmPassword: String,
+    ): Boolean {
         return if (password != confirmPassword) {
             binding.layoutForm.tilPassword.isErrorEnabled = true
             binding.layoutForm.tilPassword.error =
@@ -155,14 +164,18 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun navigateToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        })
+        startActivity(
+            Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 
     private fun navigateToMain() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
 }

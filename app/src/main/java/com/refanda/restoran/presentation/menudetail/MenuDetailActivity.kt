@@ -16,10 +16,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class MenuDetailActivity : AppCompatActivity() {
-
     companion object {
         const val EXTRAS_ITEM = "EXTRAS_ITEM"
-        fun startActivity(context: Context, person: Menu) {
+
+        fun startActivity(
+            context: Context,
+            person: Menu,
+        ) {
             val intent = Intent(context, MenuDetailActivity::class.java)
             intent.putExtra(EXTRAS_ITEM, person)
             context.startActivity(intent)
@@ -34,14 +37,12 @@ class MenuDetailActivity : AppCompatActivity() {
     }
     private var total: Double = 0.0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         bindMenu(viewModel.menu)
         setClickListener()
         observeData()
-
     }
 
     private fun setClickListener() {
@@ -62,7 +63,8 @@ class MenuDetailActivity : AppCompatActivity() {
                 doOnSuccess = {
                     Toast.makeText(
                         this,
-                        getString(R.string.text_add_to_cart_success), Toast.LENGTH_SHORT
+                        getString(R.string.text_add_to_cart_success),
+                        Toast.LENGTH_SHORT,
                     ).show()
                     finish()
                 },
@@ -72,7 +74,7 @@ class MenuDetailActivity : AppCompatActivity() {
                 },
                 doOnLoading = {
                     Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
-                }
+                },
             )
         }
     }
@@ -92,8 +94,8 @@ class MenuDetailActivity : AppCompatActivity() {
                 startActivity(i)
             }
         }
-
     }
+
     private fun observeData() {
         viewModel.priceLiveData.observe(this) {
             binding.layoutAddToCart.btnAddToCart.isEnabled = it != 0.0
@@ -103,5 +105,4 @@ class MenuDetailActivity : AppCompatActivity() {
             binding.layoutAddToCart.tvAddition.text = it.toString()
         }
     }
-
 }

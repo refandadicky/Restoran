@@ -11,9 +11,10 @@ fun MenuItemResponse?.toMenu() =
         imgUrl = this?.img_url.orEmpty(),
         desc = this?.desc.orEmpty(),
         address = this?.address.orEmpty(),
-        mapsUrl = this?.mapsUrl.orEmpty()
+        mapsUrl = this?.mapsUrl.orEmpty(),
     )
 
-fun Collection<MenuItemResponse>?.toMenu() = this?.map {
-    it.toMenu()
-} ?: listOf()
+fun Collection<MenuItemResponse>?.toMenu() =
+    this?.map {
+        it.toMenu()
+    } ?: listOf()

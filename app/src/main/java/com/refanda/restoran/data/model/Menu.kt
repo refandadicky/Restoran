@@ -5,12 +5,12 @@ import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
 @Parcelize
-data class Menu (
-    var id : String?= UUID.randomUUID().toString(),
+data class Menu(
+    var id: String? = UUID.randomUUID().toString(),
     var imgUrl: String,
     var price: Double,
     var name: String,
     var desc: String,
     var address: String,
-    var mapsUrl: String
+    var mapsUrl: String,
 ) : Parcelable

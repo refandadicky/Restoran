@@ -2,19 +2,19 @@ package com.refanda.restoran.data.source.network.model.menu
 
 import com.google.gson.annotations.SerializedName
 
-data class MenuItemResponse (
+data class MenuItemResponse(
     @SerializedName("id")
-    val id : String?,
+    val id: String?,
     @SerializedName("nama")
-    val name : String?,
+    val name: String?,
     @SerializedName("image_url")
-    val img_url : String?,
+    val img_url: String?,
     @SerializedName("harga")
-    val price : Double?,
+    val price: Double?,
     @SerializedName("detail")
-    val desc : String?,
+    val desc: String?,
     @SerializedName("alamat_resto")
-    val address : String?,
+    val address: String?,
     @SerializedName("mapsUrl")
-    val mapsUrl : String?,
+    val mapsUrl: String?,
 )

@@ -4,7 +4,8 @@ import com.refanda.restoran.data.source.network.model.checkout.CheckoutRequestPa
 import com.refanda.restoran.data.source.network.model.checkout.CheckoutResponse
 import com.refanda.restoran.data.source.network.model.menu.MenuResponse
 
-interface MenuDataSource{
+interface MenuDataSource {
     suspend fun getMenu(categorySlug: String? = null): MenuResponse
-    suspend fun createOrder(payload: CheckoutRequestPayload) : CheckoutResponse
+
+    suspend fun createOrder(payload: CheckoutRequestPayload): CheckoutResponse
 }

@@ -22,31 +22,33 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModel()
 
     private val menuAdapter: ListMenuAdapter by lazy {
-        ListMenuAdapter(viewModel.getListMode()){
+        ListMenuAdapter(viewModel.getListMode()) {
             navigateToDetail(it)
         }
     }
 
     private val categoryAdapter: CategoryAdapter by lazy {
-        CategoryAdapter{
+        CategoryAdapter {
             getMenuData(it.name)
         }
     }
 
     private var isUsingGridMode: Boolean = false
 
-
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupListMenu()
         setupListCategory()
@@ -81,7 +83,7 @@ class HomeFragment : Fragment() {
         menuAdapter.updateListMode(listMode)
         setupListMenu()
         binding.layoutMenu.rvListmenu.apply {
-            layoutManager = GridLayoutManager(requireContext(),if (usingGridMode) 2 else 1)
+            layoutManager = GridLayoutManager(requireContext(), if (usingGridMode) 2 else 1)
         }
     }
 
@@ -100,7 +102,7 @@ class HomeFragment : Fragment() {
             it.proceedWhen(
                 doOnSuccess = {
                     it.payload?.let { data -> bindCategory(data) }
-                }
+                },
             )
         }
     }
@@ -110,7 +112,7 @@ class HomeFragment : Fragment() {
             it.proceedWhen(
                 doOnSuccess = {
                     it.payload?.let { data -> bindMenuList(isUsingGridMode, data) }
-                }
+                },
             )
         }
     }
@@ -119,14 +121,17 @@ class HomeFragment : Fragment() {
         categoryAdapter.submitData(data)
     }
 
-    private fun bindMenuList(isUsingGrid: Boolean, data: List<Menu>) {
+    private fun bindMenuList(
+        isUsingGrid: Boolean,
+        data: List<Menu>,
+    ) {
         menuAdapter?.submitData(data)
     }
 
-    private fun navigateToDetail(item: Menu){
+    private fun navigateToDetail(item: Menu) {
         MenuDetailActivity.startActivity(
             requireContext(),
-            item
+            item,
         )
     }
 }

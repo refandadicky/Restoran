@@ -40,64 +40,70 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 object AppModules {
-    val networkModule = module {
-        single<RestoranApiService> { RestoranApiService.invoke() }
-    }
-
-    val firebaseModule = module {
-        single<FirebaseAuth> { FirebaseAuth.getInstance() }
-        single<FirebaseService> { FirebaseServiceImpl() }
-    }
-
-    val localModule = module {
-        single<AppDatabase> { AppDatabase.createInstance(androidContext()) }
-        single<CartDao> { get<AppDatabase>().cartDao() }
-        single<SharedPreferences> {
-            SharedPreferenceUtils.createPreference(
-                androidContext(),
-                UserPreferenceImpl.PREF_NAME
-            )
+    val networkModule =
+        module {
+            single<RestoranApiService> { RestoranApiService.invoke() }
         }
-        single<UserPreference> { UserPreferenceImpl(get()) }
-    }
 
-    private val datasource = module {
-        single<CartDataSource> { CartDatabaseDataSource(get()) }
-        single<CategoryDataSource> { CategoryApiDataSource(get()) }
-        single<MenuDataSource> { MenuApiDataSource(get()) }
-        single<AuthDataSource> { FirebaseAuthDataSource(get()) }
-    }
-
-    private val repository = module {
-        single<CartRepository> { CartRepositoryImpl(get()) }
-        single<CategoryRepository> { CategoryRepositoryImpl(get()) }
-        single<MenuRepository> { MenuRepositoryImpl(get()) }
-        single<UserRepository> { UserRepositoryImpl(get()) }
-    }
-
-    private val viewModelModule = module {
-        viewModelOf(::HomeViewModel)
-        viewModelOf(::CartViewModel)
-        viewModelOf(::CheckoutViewModel)
-        viewModel { params ->
-            MenuDetailViewModel(
-                extras = params.get(),
-                cartRepository = get()
-            )
+    val firebaseModule =
+        module {
+            single<FirebaseAuth> { FirebaseAuth.getInstance() }
+            single<FirebaseService> { FirebaseServiceImpl() }
         }
-        viewModel { MainViewModel(get()) }
-        viewModelOf(::ProfileViewModel)
-        viewModelOf(::LoginViewModel)
-        viewModelOf(::RegisterViewModel)
-    }
 
-    val modules = listOf(
-        networkModule,
-        firebaseModule,
-        localModule,
-        datasource,
-        repository,
-        viewModelModule
-    )
+    val localModule =
+        module {
+            single<AppDatabase> { AppDatabase.createInstance(androidContext()) }
+            single<CartDao> { get<AppDatabase>().cartDao() }
+            single<SharedPreferences> {
+                SharedPreferenceUtils.createPreference(
+                    androidContext(),
+                    UserPreferenceImpl.PREF_NAME,
+                )
+            }
+            single<UserPreference> { UserPreferenceImpl(get()) }
+        }
 
+    private val datasource =
+        module {
+            single<CartDataSource> { CartDatabaseDataSource(get()) }
+            single<CategoryDataSource> { CategoryApiDataSource(get()) }
+            single<MenuDataSource> { MenuApiDataSource(get()) }
+            single<AuthDataSource> { FirebaseAuthDataSource(get()) }
+        }
+
+    private val repository =
+        module {
+            single<CartRepository> { CartRepositoryImpl(get()) }
+            single<CategoryRepository> { CategoryRepositoryImpl(get()) }
+            single<MenuRepository> { MenuRepositoryImpl(get()) }
+            single<UserRepository> { UserRepositoryImpl(get()) }
+        }
+
+    private val viewModelModule =
+        module {
+            viewModelOf(::HomeViewModel)
+            viewModelOf(::CartViewModel)
+            viewModelOf(::CheckoutViewModel)
+            viewModel { params ->
+                MenuDetailViewModel(
+                    extras = params.get(),
+                    cartRepository = get(),
+                )
+            }
+            viewModel { MainViewModel(get()) }
+            viewModelOf(::ProfileViewModel)
+            viewModelOf(::LoginViewModel)
+            viewModelOf(::RegisterViewModel)
+        }
+
+    val modules =
+        listOf(
+            networkModule,
+            firebaseModule,
+            localModule,
+            datasource,
+            repository,
+            viewModelModule,
+        )
 }

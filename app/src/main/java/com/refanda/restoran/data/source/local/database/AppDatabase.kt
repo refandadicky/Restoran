@@ -10,7 +10,7 @@ import com.refanda.restoran.data.source.local.database.entity.CartEntity
 @Database(
     entities = [CartEntity::class],
     version = 1,
-    exportSchema = true
+    exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
@@ -20,11 +20,12 @@ abstract class AppDatabase : RoomDatabase() {
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
+
         fun createInstance(context: Context): AppDatabase {
             return Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                DB_NAME
+                DB_NAME,
             ).fallbackToDestructiveMigration().build()
         }
     }
