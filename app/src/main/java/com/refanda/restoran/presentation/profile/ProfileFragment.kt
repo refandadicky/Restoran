@@ -112,10 +112,15 @@ class ProfileFragment : Fragment() {
 
     private fun observeEditMode() {
         viewModel.isEditMode.observe(viewLifecycleOwner) {
+            binding.btnEdit.isEnabled = false
+            binding.emailInputLayout.isVisible = false
             binding.emailEditText.isVisible = false
             binding.nameEditText.isEnabled = it
+            binding.usernameInputLayout.isVisible = false
             binding.usernameEditText.isVisible = false
+            binding.passwordInputLayout.isVisible = false
             binding.passwordEditText.isVisible = false
+            binding.btnSave.isEnabled = it
         }
     }
 
