@@ -42,7 +42,7 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun customDialog() {
-        viewModel.checkoutData.observe(this) { result ->
+        viewModel.checkoutCart().observe(this) { result ->
             result.proceedWhen(
                 doOnSuccess = {
                     val dialog = Dialog(this)
