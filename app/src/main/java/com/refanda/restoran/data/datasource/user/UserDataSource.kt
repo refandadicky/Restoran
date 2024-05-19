@@ -1,7 +1,17 @@
 package com.refanda.restoran.data.datasource.user
 
-interface UserDataSource {
-    fun isUsingDarkMode(): Boolean
+import com.refanda.restoran.data.source.local.pref.UserPreference
 
-    fun setUsingDarkMode(isUsingDarkMode: Boolean)
+interface UserDataSource {
+    fun isUsingGridMode(): Boolean
+
+    fun setUsingGridMode(isUsingGridMode: Boolean)
+}
+
+class UserDataSourceImpl(
+    private val pref: UserPreference,
+) : UserDataSource {
+    override fun isUsingGridMode(): Boolean = pref.isUsingGridMode()
+
+    override fun setUsingGridMode(isUsingGridMode: Boolean) = pref.setUsingGridMode(isUsingGridMode)
 }
