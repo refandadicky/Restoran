@@ -10,6 +10,8 @@ import com.refanda.restoran.data.datasource.firebaseauth.AuthDataSource
 import com.refanda.restoran.data.datasource.firebaseauth.FirebaseAuthDataSource
 import com.refanda.restoran.data.datasource.menu.MenuApiDataSource
 import com.refanda.restoran.data.datasource.menu.MenuDataSource
+import com.refanda.restoran.data.datasource.user.UserDataSource
+import com.refanda.restoran.data.datasource.user.UserDataSourceImpl
 import com.refanda.restoran.data.repository.CartRepository
 import com.refanda.restoran.data.repository.CartRepositoryImpl
 import com.refanda.restoran.data.repository.CategoryRepository
@@ -70,6 +72,7 @@ object AppModules {
             single<CategoryDataSource> { CategoryApiDataSource(get()) }
             single<MenuDataSource> { MenuApiDataSource(get()) }
             single<AuthDataSource> { FirebaseAuthDataSource(get()) }
+            single<UserDataSource> { UserDataSourceImpl(get()) }
         }
 
     private val repository =
