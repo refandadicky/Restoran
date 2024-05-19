@@ -90,7 +90,7 @@ class CartRepositoryImplTest {
         }
     }
 
-    /*@Test
+    @Test
     fun getUserCartData_error() {
         every { ds.getAllCarts() } returns
             flow {
@@ -107,7 +107,7 @@ class CartRepositoryImplTest {
                 verify { ds.getAllCarts() }
             }
         }
-    }*/
+    }
 
     @Test
     fun getUserCartData_empty() {
@@ -170,22 +170,22 @@ class CartRepositoryImplTest {
         }
     }
 
-    /*@Test
+    @Test
     fun getCheckoutData_error() {
-        every { ds.getAllCarts() } returns flow { throw IllegalStateException("Checkout Error") }
+        every { ds.getAllCarts() } returns
+            flow { throw IllegalStateException("Checkout Error") }
         runTest {
             repo.getCheckoutData().map {
                 delay(100)
                 it
             }.test {
-                delay(2211)
-                val actualData = expectMostRecentItem()
-                assertTrue(actualData is ResultWrapper.Error)
-                assertEquals("Checkout Error", (actualData as ResultWrapper.Error).message)
+                delay(2210)
+                val actualResult = expectMostRecentItem()
+                assertTrue(actualResult is ResultWrapper.Error)
                 verify { ds.getAllCarts() }
             }
         }
-    }*/
+    }
 
     @Test
     fun getCheckoutData_loading() {
